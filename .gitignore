@@ -1,3 +1,4 @@
 # Ignorar archivos de configuración de las Base de datos.
-/SpringMvcHibernateXML/src/main/java/net/codejava/spring/config/ApplicationContextConfig.java
-/SpringMvcHibernateXML/target/classes/net/codejava/spring/config/ApplicationContextConfig.class
+SpringMvcHibernateXML/src/main/java/net/codejava/spring/config/ApplicationContextConfig.java
+SpringMvcHibernateXML/target/classes/net/codejava/spring/config/ApplicationContextConfig.class
+ApplicationContextConfig.*
