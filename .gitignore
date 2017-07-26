@@ -4,5 +4,5 @@ SpringMvcHibernateXML/src/main/java/net/codejava/spring/config/ApplicationContex
 SpringMvcHibernateXML/target/classes/net/codejava/spring/config/ApplicationContextConfig.class
 ApplicationContextConfig.*
 
-# Proyecto de Hibernate
-IntegrationSHS/src/main/java/com/antonio/config/ApplicationContextConfig.java
+# Proyecto de Struts 2
+#IntegrationSHS/src/main/java/com/antonio/config/ApplicationContextConfig.java
