@@ -5,4 +5,4 @@ SpringMvcHibernateXML/target/classes/net/codejava/spring/config/ApplicationConte
 ApplicationContextConfig.*
 
 # Proyecto de Struts 2
-#IntegrationSHS/src/main/java/com/antonio/config/ApplicationContextConfig.java
+IntegrationSHS/src/main/java/com/antonio/config/ApplicationContextConfig.java
