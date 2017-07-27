@@ -11,6 +11,7 @@
 	    <ul>
 	    	<li><a href="MyProducts?userId=<%= session.getAttribute("user_id") %>">My products</a></li>
 	    	<li><a href="listProduct">All products</a></li>
+	    	<li><a href="MyListBuy">My list buy</a></li>
 	    </ul>
 	</body>
 </html>

@@ -1,11 +1,15 @@
 package com.antonio.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +28,7 @@ public class Buy {
 	private int total;
 	@Column(name = "DATE")
 	private Date date;
+	private Set<DetailBuy> detailBuy = new HashSet<DetailBuy>();
 
 	public Buy() {
 	}
@@ -76,4 +81,16 @@ public class Buy {
 		this.date = new Date();
 	}
 
+	@OneToMany(mappedBy = "primaryKey.buy", cascade = CascadeType.ALL)
+	public Set<DetailBuy> getDetailBuy() {
+		return detailBuy;
+	}
+
+	public void setDetailBuy(Set<DetailBuy> detailBuy) {
+		detailBuy = detailBuy;
+	}
+
+	public void addProductBuy(DetailBuy detailBuy) {
+		this.detailBuy.add(detailBuy);
+	}
 }

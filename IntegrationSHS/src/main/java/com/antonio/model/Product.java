@@ -1,9 +1,14 @@
 package com.antonio.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -29,6 +34,7 @@ public class Product {
 	private float price;
 	@Column(name = "USER_ID")
 	private int userId;
+	private Set<DetailBuy> detailBuy = new HashSet<DetailBuy>();
 
 	public Product() {
 	}
@@ -79,6 +85,16 @@ public class Product {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	@OneToMany(mappedBy = "primaryKey.product", cascade = CascadeType.ALL)
+	public Set<DetailBuy> getDetailBuy() {
+		return detailBuy;
+	}
+	
+
+	public void setDetailBuy(Set<DetailBuy> detailBuy) {
+		detailBuy = detailBuy;
 	}
 
 }
