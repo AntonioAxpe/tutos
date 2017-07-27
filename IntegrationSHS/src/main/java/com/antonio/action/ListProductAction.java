@@ -15,7 +15,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * Clase de configuración Struts el cual ejecuta las acciones llamadas por el
  * usuario. Las anotaciones sustituyen al archivo xml, struts.xml.
  * 
- * @author avicentesh
+ * @author Antonio Soto
  */
 @Action("listProduct")
 @ResultPath("/WEB-INF/views")

@@ -6,6 +6,7 @@
 	</head>
 	<body>
 	    <h2>Welcome <%= session.getAttribute("name") %></h2>
+	    <a href="LogOut"><button>SignOut</button></a>
 	    <p>Choose a option</p>
 	    <ul>
 	    	<li><a href="MyProducts?userId=<%= session.getAttribute("user_id") %>">My products</a></li>

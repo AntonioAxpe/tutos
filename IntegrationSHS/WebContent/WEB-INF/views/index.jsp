@@ -8,23 +8,23 @@
 	<body>
 	    <h2>Login</h2>
 	    <div class="login">
-	       <s:form action="Inicio" method="POST">
-	       	<table>
-	       		<tr>
-	       			<td><s:textfield label="Username" name="user.username" /></td>
-	       		</tr>
-	       		<tr>
-	       			<td><s:password label="Password" name="user.password" /></td>
-	       		</tr>
-	       		<tr>
-	       			<td><s:submit value="LogIn" /></td>
-	       		</tr>
-	       	</table>
-	       </s:form>
+	        <s:form action="Inicio" method="POST">
+		       	<table>
+		       		<tr>
+		       			<td><s:textfield label="Username" name="user.username" /></td>
+		       		</tr>
+		       		<tr>
+		       			<td><s:password label="Password" name="user.password" /></td>
+		       		</tr>
+		       		<tr>
+		       			<td><s:submit value="LogIn" /></td>
+		       		</tr>
+		       	</table>
+	        </s:form>
 	    </div>
 	    <s:if test="%{#session.login == 'false'}">
-	    <% session.removeAttribute("login"); %>
-	       <p>No existe el usuario</p>
+	        <% session.removeAttribute("login"); %>
+	        <p>No existe el usuario</p>
 	    </s:if>
 	</body>
 </html>

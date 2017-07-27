@@ -12,10 +12,13 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.antonio.dao.BuyDAO;
+import com.antonio.dao.BuyDAOImpl;
 import com.antonio.dao.ProductDAO;
 import com.antonio.dao.ProductDAOImpl;
 import com.antonio.dao.UserDAO;
 import com.antonio.dao.UserDAOImpl;
+import com.antonio.model.Buy;
 import com.antonio.model.Product;
 import com.antonio.model.User;
 
@@ -29,8 +32,8 @@ public class ApplicationContextConfig {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/productos");
-		dataSource.setUsername("##########");
-		dataSource.setPassword("##########");
+		dataSource.setUsername("Antonio");
+		dataSource.setPassword("1234.");
 
 		return dataSource;
 	}
@@ -41,7 +44,7 @@ public class ApplicationContextConfig {
 
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 
-		sessionBuilder.addAnnotatedClasses(Product.class, User.class);
+		sessionBuilder.addAnnotatedClasses(Product.class, User.class, Buy.class);
 
 		return sessionBuilder.buildSessionFactory();
 	}
@@ -64,6 +67,12 @@ public class ApplicationContextConfig {
 	@Bean(name = "userDAO")
 	public UserDAO getUserDAO(SessionFactory sessionFactory) {
 		return new UserDAOImpl(sessionFactory);
+	}
+	
+	@Autowired
+	@Bean(name = "buyDAO")
+	public BuyDAO getBuyDAO(SessionFactory sessionFactory) {
+		return new BuyDAOImpl(sessionFactory);
 	}
 
 }

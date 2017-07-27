@@ -6,6 +6,7 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
+	    <!-- MI LISTA DE PRODUCTOS -->
 	    <s:if test="%{!getMyProducts().isEmpty()}">
             <h2>My Products List</h2>
             <table width="80%" border="1" style="border-collapse: collapse;">
@@ -25,6 +26,8 @@
             	</s:iterator>
             </table>
 	    </s:if>
+	    
+	    <!-- TODOS LOS PRODUCTOS -->
 	    <s:else>
 		    <h2>Product List</h2>
 		    <div class="products__buttons">
@@ -46,8 +49,13 @@
 		                    <td><s:property value="description" /></td>
 		                    <td><s:property value="price" /></td>
 		                    <td>
-		                        <a href="edit_product?id=<s:url value="%{id}"/>"><button>Edit</button></a>
-		                        <a href="remove_product?id=<s:url value="%{id}"/>"><button>Delete</button></a>
+		                        <div style="display: inline-block; width: 40%; text-align: center;">
+			                        <a href="edit_product?id=<s:url value="%{id}"/>"><button>Edit</button></a>
+			                        <a href="remove_product?id=<s:url value="%{id}"/>"><button>Delete</button></a>
+		                        </div>
+		                        <div style="display: inline-block; width: 40%; text-align: right;">
+			                        <a href="buy_product"><button>Buy now!</button></a>
+		                        </div> 
 		                    </td>
 		                </tr>
 		            </s:iterator>        
