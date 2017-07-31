@@ -61,6 +61,9 @@
 		            </s:iterator>        
 		        </table>
 		    </div>
+		    <div class="products_my_cart">
+		        <a href="MyCart"><button>My Cart</button></a>
+		    </div>
 	    </s:else>
 	</body>
 </html>

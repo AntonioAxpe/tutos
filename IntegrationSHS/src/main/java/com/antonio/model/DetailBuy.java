@@ -9,6 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+/**
+ * Clase Mapeadora de la tabla DETAIL_BUY, encargada de realizar automaticamente la creación 
+ * de los registros entre las tablas BUY y PRODUCT.
+ * @author Antonio Soto
+ *
+ */
 @Entity
 @Table(name = "DETAIL_BUY")
 @AssociationOverrides({

@@ -80,6 +80,7 @@ public class BuyProduct extends ActionSupport {
 		
 		// Se encarga de crear o modificar la compra en la tabla BUY.
 		buyDAO.createaBuy(buy);
+		session.put("buy", buy);
 		
 		return SUCCESS;
 	}

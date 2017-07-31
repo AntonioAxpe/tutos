@@ -65,4 +65,9 @@ public class BuyDAOImpl implements BuyDAO {
 		
 	}
 
+	@Override
+	public void deleteProduct(int idProduct) {
+		
+	}
+
 }
