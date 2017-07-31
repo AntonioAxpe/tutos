@@ -15,4 +15,6 @@ public interface BuyDAO {
 	List<Buy> listBuy();
 	
 	Buy getBuyUser(int userId, String status);
+	
+	void addProductToMyList(Buy buy);
 }

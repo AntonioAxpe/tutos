@@ -11,19 +11,17 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "DETAIL_BUY")
-@AssociationOverrides({ 
+@AssociationOverrides({
 	@AssociationOverride(name = "primaryKey.buy", joinColumns = @JoinColumn(name = "BUY_ID")),
 	@AssociationOverride(name = "primaryKey.product", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
 })
 public class DetailBuy {
 
 	private DetailBuyId primaryKey = new DetailBuyId();
-	@Column(name = "QUANTITY")
-	private float quantity;
-	@Column(name = "PRODUCT_TOTAL")
+	private int quantity;
 	private float total;
 
-	@EmbeddedId // Implementa la clase del ID compuesto como Primary Key
+	@EmbeddedId
 	public DetailBuyId getPrimaryKey() {
 		return primaryKey;
 	}
@@ -32,7 +30,6 @@ public class DetailBuy {
 		this.primaryKey = primaryKey;
 	}
 
-	/* Objetos de asignación al Objeto DetailBuyId */
 	@Transient
 	public Buy getBuy() {
 		return getPrimaryKey().getBuy();
@@ -51,16 +48,16 @@ public class DetailBuy {
 		getPrimaryKey().setProduct(product);
 	}
 	
-	/* Demás campos de la tabla */
-	
-	public float getQuantity() {
+	@Column(name = "QUANTITY")
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(float quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
+	@Column(name = "PRODUCT_TOTAL")
 	public float getTotal() {
 		return total;
 	}

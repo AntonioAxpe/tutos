@@ -1,29 +1,22 @@
 package com.antonio.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
 /**
- * Clase Primary Key de la tabla intermedia DETAILS_BUY (BUY - PRODUCT)
+ * Clase constructora de la Primary Key de la tabla intermedia DETAILS_BUY
  * @author Antonio Soto
  */
-@Embeddable // La anotación Embeddable indica que esta clase puede ser Integrada en otra entidad.
-public class DetailBuyId {
+@Embeddable
+public class DetailBuyId implements Serializable {
 
-	@ManyToOne(cascade = CascadeType.ALL)
 	private Buy buy;
-	@ManyToOne(cascade = CascadeType.ALL)
 	private Product product;
 
-	public DetailBuyId() {
-	}
-
-	public DetailBuyId(Buy buy, Product product) {
-		this.buy = buy;
-		this.product = product;
-	}
-
+	@ManyToOne(cascade = CascadeType.ALL)
 	public Buy getBuy() {
 		return buy;
 	}
@@ -32,6 +25,7 @@ public class DetailBuyId {
 		this.buy = buy;
 	}
 
+	@ManyToOne(cascade = CascadeType.ALL)
 	public Product getProduct() {
 		return product;
 	}

@@ -65,6 +65,7 @@ public class LogIn extends ActionSupport {
 			
 			if (existBuy != null) {
 				session.put("id_buy_actually", existBuy.getId());
+				session.put("buy", existBuy);
 				//System.out.println("YA EXISTE UNA COMPRA: " + existBuy.getId());
 			}else {
 				Buy newBuy = new Buy();

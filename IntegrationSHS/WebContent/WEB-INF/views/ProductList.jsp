@@ -54,7 +54,7 @@
 			                        <a href="remove_product?id=<s:url value="%{id}"/>"><button>Delete</button></a>
 		                        </div>
 		                        <div style="display: inline-block; width: 40%; text-align: right;">
-			                        <a href="buy_product"><button>Buy now!</button></a>
+			                        <a href="buy_product?id=<s:url value="%{id}"/>"><button>Buy now!</button></a>
 		                        </div> 
 		                    </td>
 		                </tr>

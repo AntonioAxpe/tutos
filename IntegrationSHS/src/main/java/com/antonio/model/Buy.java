@@ -6,7 +6,9 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -28,6 +30,7 @@ public class Buy {
 	private int total;
 	@Column(name = "DATE")
 	private Date date;
+	@OneToMany(mappedBy = "primaryKey.buy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<DetailBuy> detailBuy = new HashSet<DetailBuy>();
 
 	public Buy() {
@@ -39,6 +42,10 @@ public class Buy {
 		this.userId = userId;
 		this.total = total;
 		this.date = date;
+	}
+
+	public void addDetailBuy(DetailBuy buy) {
+		this.detailBuy.add(buy);
 	}
 
 	public int getId() {
@@ -81,16 +88,12 @@ public class Buy {
 		this.date = new Date();
 	}
 
-	@OneToMany(mappedBy = "primaryKey.buy", cascade = CascadeType.ALL)
 	public Set<DetailBuy> getDetailBuy() {
 		return detailBuy;
 	}
 
 	public void setDetailBuy(Set<DetailBuy> detailBuy) {
-		detailBuy = detailBuy;
+		this.detailBuy = detailBuy;
 	}
 
-	public void addProductBuy(DetailBuy detailBuy) {
-		this.detailBuy.add(detailBuy);
-	}
 }

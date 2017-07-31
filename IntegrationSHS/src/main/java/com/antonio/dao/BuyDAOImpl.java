@@ -19,7 +19,7 @@ public class BuyDAOImpl implements BuyDAO {
 
 	@Transactional
 	public int createaBuy(Buy buy) {
-		sessionFactory.getCurrentSession().save(buy);
+		sessionFactory.getCurrentSession().saveOrUpdate(buy);
 		String id = sessionFactory.getCurrentSession().createSQLQuery("SELECT LAST_INSERT_ID()")
 		.uniqueResult().toString();
 		
@@ -57,6 +57,12 @@ public class BuyDAOImpl implements BuyDAO {
 			return listBuy.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public void addProductToMyList(Buy buy) {
+		
+		
 	}
 
 }

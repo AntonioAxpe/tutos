@@ -14,11 +14,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.antonio.dao.BuyDAO;
 import com.antonio.dao.BuyDAOImpl;
+import com.antonio.dao.DetailBuyDAO;
+import com.antonio.dao.DetailBuyDAOImpl;
 import com.antonio.dao.ProductDAO;
 import com.antonio.dao.ProductDAOImpl;
 import com.antonio.dao.UserDAO;
 import com.antonio.dao.UserDAOImpl;
 import com.antonio.model.Buy;
+import com.antonio.model.DetailBuy;
+import com.antonio.model.DetailBuyId;
 import com.antonio.model.Product;
 import com.antonio.model.User;
 
@@ -44,7 +48,7 @@ public class ApplicationContextConfig {
 
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 
-		sessionBuilder.addAnnotatedClasses(Product.class, User.class, Buy.class);
+		sessionBuilder.addAnnotatedClasses(Product.class, User.class, Buy.class, DetailBuy.class, DetailBuyId.class);
 
 		return sessionBuilder.buildSessionFactory();
 	}
@@ -73,6 +77,12 @@ public class ApplicationContextConfig {
 	@Bean(name = "buyDAO")
 	public BuyDAO getBuyDAO(SessionFactory sessionFactory) {
 		return new BuyDAOImpl(sessionFactory);
+	}
+	
+	@Autowired
+	@Bean(name = "DetailBuyDAO")
+	public DetailBuyDAO getDetailBuyDAO(SessionFactory sessionFactory) {
+		return new DetailBuyDAOImpl(sessionFactory);
 	}
 
 }

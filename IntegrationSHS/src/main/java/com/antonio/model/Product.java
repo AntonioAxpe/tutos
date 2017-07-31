@@ -34,6 +34,7 @@ public class Product {
 	private float price;
 	@Column(name = "USER_ID")
 	private int userId;
+	@OneToMany(mappedBy = "primaryKey.product", cascade = CascadeType.ALL)
 	private Set<DetailBuy> detailBuy = new HashSet<DetailBuy>();
 
 	public Product() {
@@ -87,14 +88,16 @@ public class Product {
 		this.userId = userId;
 	}
 
-	@OneToMany(mappedBy = "primaryKey.product", cascade = CascadeType.ALL)
 	public Set<DetailBuy> getDetailBuy() {
 		return detailBuy;
 	}
-	
 
 	public void setDetailBuy(Set<DetailBuy> detailBuy) {
-		detailBuy = detailBuy;
+		this.detailBuy = detailBuy;
+	}
+
+	public void addDetailBuy(DetailBuy detailBuy) {
+		this.detailBuy.add(detailBuy);
 	}
 
 }
