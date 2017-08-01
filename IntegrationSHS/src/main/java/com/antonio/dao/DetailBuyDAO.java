@@ -8,4 +8,5 @@ public interface DetailBuyDAO {
 
 	public List<DetailBuy> getDetailBuyByBuyId(int buyId);
 	
+	public void deleteDetailBuyFromMyCart(DetailBuy detailBuy);
 }

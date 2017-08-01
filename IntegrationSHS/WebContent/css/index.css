@@ -3,6 +3,17 @@
 }
 
 /* INDEX */
-.login__tittle{
+.login__tittle, 
+.login__form{
 	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 40px;
+}
+
+.login__form .login__form__form{
+	display: inline-block;
+}
+
+.login__form .login__form__form #Inicio .label{
+	color: black;
 }

@@ -9,30 +9,40 @@ import org.hibernate.SessionFactory;
 
 import com.antonio.model.Buy;
 import com.antonio.model.DetailBuy;
+import com.antonio.model.Product;
 
 public class DetailBuyDAOImpl implements DetailBuyDAO {
 
-	private SessionFactory seccionFactory;
+	private SessionFactory sessionFactory;
 
-	public DetailBuyDAOImpl(SessionFactory seccionFactory) {
-		this.seccionFactory = seccionFactory;
+	public DetailBuyDAOImpl(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
 	@Transactional
 	public List<DetailBuy> getDetailBuyByBuyId(int buyId) {
-		String consult = "FROM Buy WHERE total = 0";
-		Query query = seccionFactory.getCurrentSession().createQuery(consult);
+		String consult = "FROM DetailBuy WHERE primaryKey.product.id = 7";
+		Query query = sessionFactory.getCurrentSession().createQuery(consult);
 
 		@SuppressWarnings("unchecked")
-		List<Buy> u = (List<Buy>) query.list();
-		/*List<DetailBuy> listProducts = (List<DetailBuy>) query.list();
+		//List<Buy> u = (List<Buy>) query.list();
+		List<DetailBuy> listProducts = (List<DetailBuy>) query.list();
 
 		if (listProducts != null && !listProducts.isEmpty()) {
 			return listProducts;
-		}*/
+		}
 
 		return null;
+	}
+	
+	@Transactional
+	public void deleteDetailBuyFromMyCart(DetailBuy detailBuy) {
+		try {
+			sessionFactory.getCurrentSession().delete(detailBuy);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 }

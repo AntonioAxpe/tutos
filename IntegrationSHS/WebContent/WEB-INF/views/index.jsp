@@ -15,22 +15,17 @@
     		<h3>Spring 4, Hibernate3 y Struts2</h3>
 	    </div>
 	    <div class="login__form">
-    		<h2>Login</h2>
-	        <s:form action="Inicio" method="POST">
-		       	<div class="form-group">
-	       	  		<s:textfield type="text" class="form-control" name="user.username" label="Username" placeholder="Username"/>
-			    </div>
-			    <div class="form-group">
-		       		<s:password class="form-control" label="Password" name="user.password" placeholder="Password"/>
-			    </div>
-			    <div class="form-group">
-		       		<s:submit value="LogIn" class="btn btn-default" />
-			    </div>
-	        </s:form>
+	        <div class="login__form__form">
+		        <s:form action="Inicio" method="POST">
+	                <s:textfield type="text" label="Username" class="form-control" name="user.username" placeholder="Username"/>
+	                <s:password class="form-control" label="Password" name="user.password" placeholder="Password"/>
+	                <s:submit value="LogIn" class="btn btn-default" />
+	            </s:form>
+	        </div>
+		    <s:if test="%{#session.login == 'false'}">
+		        <% session.removeAttribute("login"); %>
+		        <p>No existe el usuario</p>
+		    </s:if>
 	    </div>
-	    <s:if test="%{#session.login == 'false'}">
-	        <% session.removeAttribute("login"); %>
-	        <p>No existe el usuario</p>
-	    </s:if>
 	</body>
 </html>

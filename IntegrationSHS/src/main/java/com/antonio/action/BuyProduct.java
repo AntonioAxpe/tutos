@@ -55,20 +55,32 @@ public class BuyProduct extends ActionSupport {
 		// En caso de que la lista esté vacia se una nueva y se le añade el producto
 		// En caso de no estar vacia se itera la lista.
 		if (cesta != null) {
-			Iterator<DetailBuy> iterador = cesta.iterator();
 			
-			// Se va extrayendo cada uno de los objetos y se comprueba si coinciden en ID
-			// Si coinciden se modifica su cantidad y total y se actualiza el registro de la lista
-			// de Detalles de Compra.
-			while(iterador.hasNext()) {
-				DetailBuy detalles = iterador.next();
-				Product producto = detalles.getProduct();
-				if (producto.getId() == product.getId()) {
-					detalles.setQuantity(detalles.getQuantity() + 1);
-					detalles.setTotal(detalles.getTotal() + product.getPrice());
-					buy.addDetailBuy(detalles);
-				}
+			// Antes de añadir un nuevo producto a la cesta se comprueba si ese producto ya se encuentra en la cesta.
+			if (getMyProduct(buy, id)) {
+				Iterator<DetailBuy> iterador = cesta.iterator();
+				
+				// Se va extrayendo cada uno de los objetos y se comprueba si coinciden en ID
+				// Si coinciden se modifica su cantidad y total y se actualiza el registro de la lista
+				// de Detalles de Compra.
+				while(iterador.hasNext()) {
+					DetailBuy detalles = iterador.next();
+					Product producto = detalles.getProduct();
+					if (producto.getId() == product.getId()) {
+						detalles.setQuantity(detalles.getQuantity() + 1);
+						detalles.setTotal(detalles.getTotal() + product.getPrice());
+						buy.addDetailBuy(detalles);
+					}
+				}				
+			}else {
+				DetailBuy detailBuy = new DetailBuy();
+				detailBuy.setBuy(buy);
+				detailBuy.setProduct(product);
+				detailBuy.setQuantity(1);
+				detailBuy.setTotal(product.getPrice());
+				buy.addDetailBuy(detailBuy);
 			}
+			
 		}else {
 			DetailBuy detailBuy = new DetailBuy();
 			detailBuy.setBuy(buy);
@@ -85,4 +97,18 @@ public class BuyProduct extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public Boolean getMyProduct(Buy myListProduct, int idProduct) {
+		Set<DetailBuy> cesta = (Set<DetailBuy>) myListProduct.getDetailBuy();
+		Iterator<DetailBuy> iterador = cesta.iterator();
+		
+		while(iterador.hasNext()) {
+			DetailBuy detalles = iterador.next();
+			if (detalles.getProduct().getId() == idProduct) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 }

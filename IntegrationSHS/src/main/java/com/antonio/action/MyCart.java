@@ -11,8 +11,10 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.ResultPath;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.antonio.dao.BuyDAO;
+import com.antonio.dao.DetailBuyDAO;
 import com.antonio.model.Buy;
 import com.antonio.model.DetailBuy;
 import com.antonio.model.Product;
@@ -26,7 +28,10 @@ public class MyCart extends ActionSupport {
 
 	private List<DetailBuy> myCartList = null;
 	private int totalMyCart = 0;
+	@Autowired
 	private BuyDAO buyDAO;
+	@Autowired
+	private DetailBuyDAO detailBuyDAO;
 
 	public List<DetailBuy> getMyCartList() {
 		return myCartList;
@@ -38,23 +43,38 @@ public class MyCart extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
-
+		/**
+		 * Este actión ejecutará 3 acciones:
+		 * - Ver mi carrito: Lista todos los productos en pantalla del carrito del usuario.
+		 * - Editar producto: Puede modificar la cantidad de compra del producto en el carrito.
+		 * - Eliminar producto: Elimina el producto del carrito de compra.
+		 * 
+		 * Al momento de listar no envia ningún parametro.
+		 * Por parte de eliminar y editar se envia un parametro 'action' con el ID del producto en el carrito.
+		 */
+		
 		@SuppressWarnings("rawtypes")
 		Map session = ActionContext.getContext().getSession();
 		Buy buy = (Buy) session.get("buy");
 		myCartList = parseToList(buy);
 		totalMyCart = getTotalMyList(myCartList);
-		String action = ServletActionContext.getRequest().getParameter("action");
-		int idProduct = Integer.parseInt(ServletActionContext.getRequest().getParameter("id"));
 		
-		switch (action) {
-			case "delete":
-				break;
-			case "edit":
-				break;
-		    	
-		}
+		if (ServletActionContext.getRequest().getParameter("action") != null 
+				&& ServletActionContext.getRequest().getParameter("id") != null) {
+			String action = ServletActionContext.getRequest().getParameter("action");
+			int idProduct = Integer.parseInt(ServletActionContext.getRequest().getParameter("id"));			
 
+			switch (action) {
+				case "delete":
+					buy = deleteProductFromMyCart(buy, idProduct);
+					myCartList = parseToList(buy);
+					totalMyCart = getTotalMyList(myCartList);
+					buyDAO.createaBuy(buy);
+					break;
+				case "edit":
+					break;	
+			}
+		}
 
 		return SUCCESS;
 	}
@@ -93,4 +113,28 @@ public class MyCart extends ActionSupport {
 		}
 		return total;
 	}
+
+	/**
+	 * Elimina de una Compra un producto a través de su ID.
+	 * @param myCart Compra actual de todos los productos del usuario.
+	 * @param idProduct Identificador del producto a eliminar.
+	 * @return Devuelve la compra actualizada.
+	 */
+    public Buy deleteProductFromMyCart(Buy myCart, int idProduct) {
+    	// Se obtiene la lista DetalleCompra de la Compra y se itera.
+    	Set<DetailBuy> myCartList = (Set<DetailBuy>) myCart.getDetailBuy();
+    	Iterator<DetailBuy> itr = myCartList.iterator();
+    	
+    	// Cada recorrido comprueba si el objeto de la lista coincide con el id del producto a eliminar.
+    	while (itr.hasNext()) {
+    		DetailBuy db = itr.next();
+			if (db.getProduct().getId() == idProduct) {
+				detailBuyDAO.deleteDetailBuyFromMyCart(db);
+				itr.remove();
+			}
+		}
+    	
+    	// Una vez eliminado el producto, devuelve la compra actualizada.
+    	return myCart;
+    }
 }
