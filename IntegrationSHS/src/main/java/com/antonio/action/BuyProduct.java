@@ -19,75 +19,47 @@ import com.antonio.model.Product;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * Clase encargada de almacenar los productos pedidos en la cesta del usuario.
+ * @author Antonio Soto
+ */
 @Action("/buy_product")
 @ResultPath("/WEB-INF/views")
 @Result(name = "success", type = "redirect", location = "listProduct")
 public class BuyProduct extends ActionSupport {
 
 	@Autowired
-	BuyDAO buyDAO;
+	private BuyDAO buyDAO;
 	@Autowired
-	ProductDAO productDAO;
+	private ProductDAO productDAO;
+	private Product product;
+	private Buy buy;
+	private Set<DetailBuy> miCesta;
 	
 	@Override
 	public String execute() throws Exception {
-		
-		/**
-		 * INTEGRACIÓN DE LAS TABLAS BUY - DETAILS - PRODUCT.
-		 * Un producto es añadido a una compra, la compra registra un detalle de todos los productos comprados.
-		 * 
-		 * Producto ->(guarda)-> Detalle de Compra ->(asociada)-> Compra
-		 */
 		Map session = ActionContext.getContext().getSession();
 		int buyId = (int) session.get("id_buy_actually");
 		
-		// Se obtiene el producto
+		// Producto a añadir a la cesta
 		int id = Integer.parseInt(ServletActionContext.getRequest().getParameter("id"));
-		Product product = productDAO.getProduct(id);
+		product = productDAO.getProduct(id);
 		
-		// Se obtiene la compra actual del usuario
-		Buy buy = (Buy) session.get("buy");
+		// Se obtiene la compra activa del usuario
+		buy = (Buy) session.get("buy");
 
-		// Se extrae la lista de productos asociadas a la compra actual
-		@SuppressWarnings("unchecked")
-		Set<DetailBuy> cesta = (Set<DetailBuy>) buy.getDetailBuy();
-		
-		// En caso de que la lista esté vacia se una nueva y se le añade el producto
-		// En caso de no estar vacia se itera la lista.
-		if (cesta != null) {
-			
-			// Antes de añadir un nuevo producto a la cesta se comprueba si ese producto ya se encuentra en la cesta.
-			if (getMyProduct(buy, id)) {
-				Iterator<DetailBuy> iterador = cesta.iterator();
-				
-				// Se va extrayendo cada uno de los objetos y se comprueba si coinciden en ID
-				// Si coinciden se modifica su cantidad y total y se actualiza el registro de la lista
-				// de Detalles de Compra.
-				while(iterador.hasNext()) {
-					DetailBuy detalles = iterador.next();
-					Product producto = detalles.getProduct();
-					if (producto.getId() == product.getId()) {
-						detalles.setQuantity(detalles.getQuantity() + 1);
-						detalles.setTotal(detalles.getTotal() + product.getPrice());
-						buy.addDetailBuy(detalles);
-					}
-				}				
-			}else {
-				DetailBuy detailBuy = new DetailBuy();
-				detailBuy.setBuy(buy);
-				detailBuy.setProduct(product);
-				detailBuy.setQuantity(1);
-				detailBuy.setTotal(product.getPrice());
-				buy.addDetailBuy(detailBuy);
-			}
-			
+		// Se extrae la lista DetalleCompra de la compra activa del usuario
+		miCesta = (Set<DetailBuy>) buy.getDetailBuy();
+
+		// En caso de estar vacia se le añade el primer producto.
+		if (miCesta != null) {
+			// En caso de no estar vacia, se comprueba si el producto se encuentra ya en la lista.
+			if (getMyProduct(buy, id)) 
+				editProductInMyBuy(miCesta, product);
+			else 
+				insertInMyBuy();
 		}else {
-			DetailBuy detailBuy = new DetailBuy();
-			detailBuy.setBuy(buy);
-			detailBuy.setProduct(product);
-			detailBuy.setQuantity(1);
-			detailBuy.setTotal(product.getPrice());
-			buy.addDetailBuy(detailBuy);
+			insertInMyBuy();
 		}
 		
 		// Se encarga de crear o modificar la compra en la tabla BUY.
@@ -97,6 +69,12 @@ public class BuyProduct extends ActionSupport {
 		return SUCCESS;
 	}
 
+	/**
+	 * Consulta en la cesta del usuario si el producto ya se encuentra añadido.
+	 * @param myListProduct Cesta del usuario
+	 * @param idProduct Producto a consultar.
+	 * @return Devuelve true o false si el producto se encuentra o no en la cesta.
+	 */
 	public Boolean getMyProduct(Buy myListProduct, int idProduct) {
 		Set<DetailBuy> cesta = (Set<DetailBuy>) myListProduct.getDetailBuy();
 		Iterator<DetailBuy> iterador = cesta.iterator();
@@ -111,4 +89,37 @@ public class BuyProduct extends ActionSupport {
 		return false;
 	}
 	
+	/** 
+	 * Itera la cesta del usuario para añadir la cantidad y el precio del producto a añadir.
+	 * @param cesta Lista de productos ya añadidos.
+	 * @param newProduct Nuevo producto a modificar.
+	 */
+	public void editProductInMyBuy(Set<DetailBuy> cesta, Product newProduct) {
+		Iterator<DetailBuy> iterador = cesta.iterator();
+		
+		// Se va extrayendo cada uno de los objetos y se comprueba si coinciden en ID
+		// Si coinciden se modifica su cantidad y total y se actualiza el registro de la lista
+		// de Detalles de Compra.
+		while(iterador.hasNext()) {
+			DetailBuy detalles = iterador.next();
+			Product producto = detalles.getProduct();
+			if (producto.getId() == newProduct.getId()) {
+				detalles.setQuantity(detalles.getQuantity() + 1);
+				detalles.setTotal(detalles.getTotal() + product.getPrice());
+				buy.addDetailBuy(detalles);
+			}
+		}
+	}
+	
+	/**
+	 * Inserta un producto en caso de ser nuevo en la lista.
+	 */
+	public void insertInMyBuy() {
+		DetailBuy detailBuy = new DetailBuy();
+		detailBuy.setBuy(buy);
+		detailBuy.setProduct(product);
+		detailBuy.setQuantity(1);
+		detailBuy.setTotal(product.getPrice());
+		buy.addDetailBuy(detailBuy);
+	}
 }

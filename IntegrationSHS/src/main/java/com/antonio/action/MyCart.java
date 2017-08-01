@@ -62,7 +62,7 @@ public class MyCart extends ActionSupport {
 		if (ServletActionContext.getRequest().getParameter("action") != null 
 				&& ServletActionContext.getRequest().getParameter("id") != null) {
 			String action = ServletActionContext.getRequest().getParameter("action");
-			int idProduct = Integer.parseInt(ServletActionContext.getRequest().getParameter("id"));			
+			int idProduct = Integer.parseInt(ServletActionContext.getRequest().getParameter("id"));
 
 			switch (action) {
 				case "delete":
@@ -72,7 +72,7 @@ public class MyCart extends ActionSupport {
 					buyDAO.createaBuy(buy);
 					break;
 				case "edit":
-					break;	
+					break;
 			}
 		}
 
