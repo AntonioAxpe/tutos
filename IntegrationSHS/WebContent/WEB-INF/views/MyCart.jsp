@@ -16,54 +16,46 @@
 	        <h2>My Cart</h2>
         </div>
         <div class="my_cart__cart">
-            
             <s:if test="%{buyPayed}">
                 <h2>The buy has been payed successfully</h2>
                 <div>
-                    <a href="Inicio"><button>Back to main</button></a>
-                    <a href="LogOut"><button>SigOut</button></a>
+                    <a href="Inicio"><button class="btn btn-primary">Back to main</button></a>
+                    <a href="LogOut"><button class="btn btn-danger">SigOut</button></a>
                 </div>
             </s:if>
             <s:else>
 			    <s:if test="%{!getMyCartList().isEmpty()}">
-				    <table class="cart_table" border="1">
+				    <table class="cart_table table table-hover">
 				    	<tr>
 				    	    <th></th>
 				    	    <th></th>
 				    		<th>Product name</th>
 				    		<th>Quantity</th>
 				    		<th>Price</th>
-				    		<th></th>
 				    	</tr>
 				    	<s:iterator value="myCartList" status="num">
-				    	<tr class="cart_table__product">
-				    	    <td><a href="MyCart?action=delete&id=<s:url value="%{primaryKey.Product.id}"/>">x</a></td>
-				    		<td><s:property value="#num.count"/></td>
-				    		<td><s:property value="primaryKey.Product.name"/></td>
-				    		<td class="cart_table__product__quantity">
-				    		    <span><s:property value="quantity"/></span>
-				    		    <div class="cart_table__product__quantity__buttons">
-					    		    <button class="btn_more">+</button>
-					    		    <button class="btn_less">-</button>
-				    		    </div>
-			    		    </td>
-				    		<td align="right"><s:property value="total"/> €</td>
-				    	</tr>
+					    	<tr class="cart_table__product">
+					    	    <td><a href="MyCart?action=delete&id=<s:url value="%{primaryKey.Product.id}"/>">x</a></td>
+					    		<td><s:property value="#num.count"/></td>
+					    		<td><s:property value="primaryKey.Product.name"/></td>
+					    		<td class="cart_table__product__quantity"><s:property value="quantity"/></td>
+					    		<td align="right"><s:property value="total"/> €</td>
+					    	</tr>
 				    	</s:iterator>
-				    	<tr class="cart_table__product">
-				    	    <td align="right" colspan="4">Total</td>
-				    		<td align="right"><s:property value="totalMyCart" /> €</td>
+				    	<tr class="cart_table__product success">
+				    	    <td align="right" colspan="4"><b>Total</b></td>
+				    		<td align="right"><b><s:property value="totalMyCart" /> €</b></td>
 				    	</tr>
 				    </table>
 				    <div class="cart__actions">
-				        <a href="listProduct"><button>Back to the shop</button></a>
-				        <a href="PayBuy"><button>Buy now!!</button></a>
+				        <a href="listProduct"><button class="btn btn-primary">Back to the shop</button></a>
+				        <a href="PayBuy"><button class="btn btn-success">Buy now!!</button></a>
 				    </div>
 			    </s:if>
 			    <s:else>
 			        <h3>Your cart is emtpy</h3>
 			        <div class="cart__actions">
-	                    <a href="listProduct"><button>Back to the shop</button></a>
+	                    <a href="listProduct"><button class="btn btn-danger">Back to the shop</button></a>
 	                </div>
 			    </s:else>
             </s:else>
