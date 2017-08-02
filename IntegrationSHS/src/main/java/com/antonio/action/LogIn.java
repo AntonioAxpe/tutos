@@ -48,11 +48,18 @@ public class LogIn extends ActionSupport {
 
 	@Override
 	public String execute(){
+		Map session = ActionContext.getContext().getSession();
+
 		// Comprobación del usuario y contraseña de LogIn
-		User u = userDAO.userLogIn(user.getUsername(), user.getPassword());
+		
+		User u = null;
+		if (user != null) {			
+			u = userDAO.userLogIn(user.getUsername(), user.getPassword());
+		}else if (session.get("username") != "" && session.get("password") != "") {
+			u = userDAO.userLogIn(String.valueOf(session.get("username")), String.valueOf(session.get("password")));
+		}
 		
 		// Creación del Mapa de Sesión
-		Map session = ActionContext.getContext().getSession();
 		if (u != null) {
 			// En caso de que el usuario sí exista se guarda sus datos en la sessión actual
 			session.put("username", u.getUsername());
@@ -75,6 +82,8 @@ public class LogIn extends ActionSupport {
 				newBuy.setDate();
 				int idBuy = buyDao.createaBuy(newBuy);
 				session.put("id_buy_actually", idBuy);
+				newBuy.setId(idBuy);
+				session.put("buy", newBuy);
 				//System.out.println("ID DE LA COMPRA CREADA: " + idBuy);
 			}
 			

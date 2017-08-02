@@ -62,6 +62,9 @@ public class BuyProduct extends ActionSupport {
 			insertInMyBuy();
 		}
 		
+		
+		generateTotalBuy(buy);
+		
 		// Se encarga de crear o modificar la compra en la tabla BUY.
 		buyDAO.createaBuy(buy);
 		session.put("buy", buy);
@@ -122,4 +125,17 @@ public class BuyProduct extends ActionSupport {
 		detailBuy.setTotal(product.getPrice());
 		buy.addDetailBuy(detailBuy);
 	}
+
+    public void generateTotalBuy(Buy buy) {
+    	Set<DetailBuy> myDetailBuy = buy.getDetailBuy();
+		Iterator<DetailBuy> itr = myDetailBuy.iterator();
+		float buyTotal = 0;
+		
+    	while (itr.hasNext()) {
+			DetailBuy detail = itr.next();
+			buyTotal += detail.getTotal();
+		}
+    	
+    	buy.setTotal(buyTotal);
+    }
 }

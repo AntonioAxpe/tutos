@@ -27,7 +27,7 @@ public class Buy {
 	@Column(name = "USER_ID")
 	private int userId;
 	@Column(name = "BUY_TOTAL")
-	private int total;
+	private float total;
 	@Column(name = "DATE")
 	private Date date;
 	@OneToMany(mappedBy = "primaryKey.buy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -36,7 +36,7 @@ public class Buy {
 	public Buy() {
 	}
 
-	public Buy(int id, String status, int userId, int total, Date date) {
+	public Buy(int id, String status, int userId, float total, Date date) {
 		this.id = id;
 		this.status = status;
 		this.userId = userId;
@@ -72,11 +72,11 @@ public class Buy {
 		this.userId = userId;
 	}
 
-	public int getTotal() {
+	public float getTotal() {
 		return total;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(float total) {
 		this.total = total;
 	}
 

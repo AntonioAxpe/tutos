@@ -27,17 +27,18 @@ import com.opensymphony.xwork2.ActionSupport;
 public class MyCart extends ActionSupport {
 
 	private List<DetailBuy> myCartList = null;
-	private int totalMyCart = 0;
+	private float totalMyCart = 0;
 	@Autowired
 	private BuyDAO buyDAO;
 	@Autowired
 	private DetailBuyDAO detailBuyDAO;
 
+	
 	public List<DetailBuy> getMyCartList() {
 		return myCartList;
 	}
 
-	public int getTotalMyCart() {
+	public float getTotalMyCart() {
 		return totalMyCart;
 	}
 
@@ -69,12 +70,14 @@ public class MyCart extends ActionSupport {
 					buy = deleteProductFromMyCart(buy, idProduct);
 					myCartList = parseToList(buy);
 					totalMyCart = getTotalMyList(myCartList);
-					buyDAO.createaBuy(buy);
 					break;
 				case "edit":
 					break;
 			}
 		}
+		
+		generateTotalBuy(buy);
+		buyDAO.createaBuy(buy);
 
 		return SUCCESS;
 	}
@@ -106,8 +109,8 @@ public class MyCart extends ActionSupport {
 	 *            List a recorrer.
 	 * @return Devuelve la cantidad total.
 	 */
-	public int getTotalMyList(List<DetailBuy> list) {
-		int total = 0;
+	public float getTotalMyList(List<DetailBuy> list) {
+		float total = 0;
 		for (int i = 0; i < list.size(); i++) {
 			total += list.get(i).getTotal();
 		}
@@ -136,5 +139,18 @@ public class MyCart extends ActionSupport {
     	
     	// Una vez eliminado el producto, devuelve la compra actualizada.
     	return myCart;
+    }
+
+    public void generateTotalBuy(Buy buy) {
+    	Set<DetailBuy> myDetailBuy = buy.getDetailBuy();
+		Iterator<DetailBuy> itr = myDetailBuy.iterator();
+		float buyTotal = 0;
+		
+    	while (itr.hasNext()) {
+			DetailBuy detail = itr.next();
+			buyTotal += detail.getTotal();
+		}
+    	
+    	buy.setTotal(buyTotal);
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-07-2017 a las 18:03:46
+-- Tiempo de generación: 02-08-2017 a las 09:49:23
 -- Versión del servidor: 10.1.25-MariaDB
 -- Versión de PHP: 7.1.7
 
@@ -32,7 +32,7 @@ CREATE TABLE `buy` (
   `buy_id` int(11) NOT NULL,
   `status` varchar(20) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `buy_total` int(11) NOT NULL,
+  `buy_total` float NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -41,8 +41,14 @@ CREATE TABLE `buy` (
 --
 
 INSERT INTO `buy` (`buy_id`, `status`, `user_id`, `buy_total`, `date`) VALUES
-(1, 'checked', 1, 0, '2017-07-27'),
-(4, 'active', 1, 0, '2017-07-27');
+(1, 'checked', 1, 56, '2017-07-27'),
+(4, 'payed', 1, 35258.7, '2017-07-27'),
+(5, 'payed', 1, 2, '2017-08-02'),
+(6, 'payed', 1, 317.69, '2017-08-02'),
+(7, 'payed', 1, 2, '2017-08-02'),
+(8, 'payed', 1, 14.7, '2017-08-02'),
+(9, 'payed', 1, 14.7, '2017-08-02'),
+(10, 'active', 1, 0, '2017-08-02');
 
 -- --------------------------------------------------------
 
@@ -54,8 +60,29 @@ CREATE TABLE `detail_buy` (
   `buy_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(5) NOT NULL,
-  `product_total` int(11) NOT NULL
+  `product_total` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `detail_buy`
+--
+
+INSERT INTO `detail_buy` (`buy_id`, `product_id`, `quantity`, `product_total`) VALUES
+(4, 2, 27, 54),
+(4, 3, 29, 348),
+(4, 7, 35, 34720),
+(4, 10, 1, 122),
+(4, 11, 1, 14.7),
+(5, 2, 1, 2),
+(6, 2, 1, 2),
+(6, 3, 2, 24),
+(6, 7, 1, 30.99),
+(6, 8, 1, 2),
+(6, 10, 2, 244),
+(6, 11, 1, 14.7),
+(7, 2, 1, 2),
+(8, 11, 1, 14.7),
+(9, 11, 1, 14.7);
 
 -- --------------------------------------------------------
 
@@ -76,9 +103,13 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `user_id`) VALUES
-(2, 'PC', 'insertProduct6262', 2, 1),
-(3, 'Nuevo producto', '124', 12, 1),
-(7, 'Barbacoa', 'uououuouo', 992, 1);
+(2, 'Pc GAYmer', 'Sutíl ordenador para las princesas reinonas de la vida', 2, 1),
+(3, 'Tractor', 'Es lo que se lleva ahora', 12, 1),
+(7, 'Barbacoa', 'Como me gusta la barbequiu', 30.99, 1),
+(8, 'Nada', 'Esto no es nada', 2, 1),
+(9, 'Ventilador', 'Ergonomia total con varios niveles', 10.5, 1),
+(10, 'Neymar', 'Bueno, bonito y con ansias de dinero', 122, 1),
+(11, 'Bicho', 'Ay mi madre! Como defrauda hacienda el bichoooo!!', 14.7, 1);
 
 -- --------------------------------------------------------
 
@@ -139,12 +170,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `buy`
 --
 ALTER TABLE `buy`
-  MODIFY `buy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `buy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `user`
 --

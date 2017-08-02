@@ -28,19 +28,14 @@ public class BuyDAOImpl implements BuyDAO {
 
 	@Transactional
 	public void deleteBuy(int idBuy) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Transactional
 	public void getBuy(int idBuy) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Transactional
 	public List<Buy> listBuy() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -61,13 +56,10 @@ public class BuyDAOImpl implements BuyDAO {
 
 	@Override
 	public void addProductToMyList(Buy buy) {
-		
-		
 	}
 
 	@Override
 	public void deleteProduct(int idProduct) {
-		
 	}
 
 }
