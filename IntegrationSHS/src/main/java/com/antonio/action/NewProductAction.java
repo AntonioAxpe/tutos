@@ -2,15 +2,14 @@ package com.antonio.action;
 
 import java.util.Map;
 
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.ResultPath;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.antonio.dao.ProductDAO;
 import com.antonio.model.Product;
+import com.antonio.service.ProductService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -23,7 +22,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class NewProductAction extends ActionSupport {
 
 	@Autowired
-	private ProductDAO productDAO;
+	private ProductService productService;
 	private Product product;
 	private Map session;
 
@@ -41,7 +40,7 @@ public class NewProductAction extends ActionSupport {
 		if (product != null) {
 			session = ActionContext.getContext().getSession();
 			product.setUserId(Integer.parseInt(session.get("user_id").toString()));
-			productDAO.insertProduct(product);
+			productService.insertProduct(product);
 			return SUCCESS;
 		}else {
 			return NONE;

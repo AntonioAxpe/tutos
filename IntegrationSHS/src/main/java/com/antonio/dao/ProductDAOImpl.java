@@ -7,29 +7,30 @@ import javax.transaction.Transactional;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.antonio.model.Product;
 
+@Repository
 public class ProductDAOImpl implements ProductDAO {
 
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	public ProductDAOImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
-	@Transactional
-    public void insertProduct(Product product) {
-    	sessionFactory.getCurrentSession().saveOrUpdate(product);
-    }
+	public void insertProduct(Product product) {
+		sessionFactory.getCurrentSession().saveOrUpdate(product);
+	}
 
-	@Transactional
 	public void deleteProduct(int idProduct) {
 		Product product = this.getProduct(idProduct);
 		sessionFactory.getCurrentSession().delete(product);
 	}
-	
-	@Transactional
+
 	public Product getProduct(int idProduct) {
 		String hql = "FROM Product WHERE id = " + idProduct;
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
@@ -43,8 +44,7 @@ public class ProductDAOImpl implements ProductDAO {
 
 		return null;
 	}
-	
-	@Transactional
+
 	public List<Product> listProduct() {
 		@SuppressWarnings("unchecked")
 		List<Product> listProduct = (List<Product>) sessionFactory.getCurrentSession().createCriteria(Product.class)
@@ -52,7 +52,6 @@ public class ProductDAOImpl implements ProductDAO {
 		return listProduct;
 	}
 
-	@Transactional
 	public List<Product> listMyProductById(int idUser) {
 
 		String hql = "FROM Product WHERE userId = " + idUser;

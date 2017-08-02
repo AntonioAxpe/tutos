@@ -12,27 +12,16 @@
 	<body>
 	    <s:if test="%{getProduct() != null}">
 		    <!-- EDITAR UN PRODUCTO -->
-		    <div class="product__edit">
+		    <div class="product__new">
 		        <h2>Edit product</h2>
+		        <a href="listProduct"><button class="btn btn-danger">Cancel</button></a>
 		        <s:form action="edit_product" method="post">
-		           <table>
-		               <s:hidden name="product.id" value="%{getProduct().getId()}"/>
-		               <s:hidden name="product.userId" value="%{getProduct().getUserId()}"/>
-			           <tr>
-			           		<td>
-			                    <s:textfield label="Name" name="product.name" value="%{getProduct().getName()}"/> 
-			           		</td>
-			           </tr>
-			           <tr>
-			           		<td><s:textarea label="Description" name="product.description" value="%{getProduct().getDescription()}"/></td>
-			           </tr>
-			           <tr>
-			           		<td><s:textfield label="Price" name="product.price" type="number" value="%{getProduct().getPrice()}"/> </td>
-			           </tr>
-			           <tr>
-			           	   <td><s:submit value="Update"/></td>
-			           </tr>
-		           </table>
+	               <s:hidden name="product.id" value="%{getProduct().getId()}"/>
+	               <s:hidden name="product.userId" value="%{getProduct().getUserId()}"/>
+		           <s:textfield label="Name" name="product.name" value="%{getProduct().getName()}"/> 
+		           <s:textarea label="Description" name="product.description" value="%{getProduct().getDescription()}"/>
+		           <s:textfield label="Price" name="product.price" type="number" value="%{getProduct().getPrice()}"/>
+		           <s:submit class="btn btn-success" value="Update"/>
 	            </s:form>
 	        </div>
         </s:if>

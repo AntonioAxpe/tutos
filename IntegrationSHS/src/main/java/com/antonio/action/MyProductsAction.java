@@ -9,8 +9,8 @@ import org.apache.struts2.convention.annotation.ResultPath;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.antonio.dao.ProductDAO;
 import com.antonio.model.Product;
+import com.antonio.service.ProductService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Action("MyProducts")
@@ -19,21 +19,17 @@ import com.opensymphony.xwork2.ActionSupport;
 public class MyProductsAction extends ActionSupport {
 
 	@Autowired
-	private ProductDAO productDAO;
+	private ProductService productService;
 	private List<Product> myProducts;
 
 	public List<Product> getMyProducts() {
 		return myProducts;
 	}
 
-	public void setMyProducts(List<Product> myProducts) {
-		this.myProducts = myProducts;
-	}
-
 	@Override
 	public String execute() throws Exception {
 		String id = ServletActionContext.getRequest().getParameter("userId");
-		myProducts = productDAO.listMyProductById(Integer.parseInt(id));
+		myProducts = productService.listMyProductById(Integer.parseInt(id));
 		return SUCCESS;
 	}
 

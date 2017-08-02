@@ -13,11 +13,10 @@ import org.apache.struts2.convention.annotation.ResultPath;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.antonio.dao.BuyDAO;
 import com.antonio.dao.DetailBuyDAO;
 import com.antonio.model.Buy;
 import com.antonio.model.DetailBuy;
-import com.antonio.model.Product;
+import com.antonio.service.BuyService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -29,10 +28,9 @@ public class MyCart extends ActionSupport {
 	private List<DetailBuy> myCartList = null;
 	private float totalMyCart = 0;
 	@Autowired
-	private BuyDAO buyDAO;
+	private BuyService buyService;
 	@Autowired
 	private DetailBuyDAO detailBuyDAO;
-
 	
 	public List<DetailBuy> getMyCartList() {
 		return myCartList;
@@ -77,7 +75,7 @@ public class MyCart extends ActionSupport {
 		}
 		
 		generateTotalBuy(buy);
-		buyDAO.createaBuy(buy);
+		buyService.createaBuy(buy);
 
 		return SUCCESS;
 	}

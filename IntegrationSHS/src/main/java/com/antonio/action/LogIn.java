@@ -8,10 +8,10 @@ import org.apache.struts2.convention.annotation.ResultPath;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.antonio.dao.BuyDAO;
-import com.antonio.dao.UserDAO;
 import com.antonio.model.Buy;
 import com.antonio.model.User;
+import com.antonio.service.BuyService;
+import com.antonio.service.UserService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -25,18 +25,10 @@ import com.opensymphony.xwork2.ActionSupport;
 public class LogIn extends ActionSupport {
 
 	@Autowired
-	private UserDAO userDAO;
+	private UserService userService;
 	@Autowired
-	private BuyDAO buyDao;
+	private BuyService buyService;
 	private User user;
-
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
 
 	public User getUser() {
 		return user;
@@ -54,9 +46,9 @@ public class LogIn extends ActionSupport {
 		
 		User u = null;
 		if (user != null) {			
-			u = userDAO.userLogIn(user.getUsername(), user.getPassword());
+			u = userService.userLogIn(user.getUsername(), user.getPassword());
 		}else if (session.get("username") != "" && session.get("password") != "") {
-			u = userDAO.userLogIn(String.valueOf(session.get("username")), String.valueOf(session.get("password")));
+			u = userService.userLogIn(String.valueOf(session.get("username")), String.valueOf(session.get("password")));
 		}
 		
 		// Creación del Mapa de Sesión
@@ -68,7 +60,7 @@ public class LogIn extends ActionSupport {
 			session.put("user_id", u.getId());
 			
 			// Comprueba si el usuario tiene una compra activa
-			Buy existBuy = buyDao.getBuyUser(u.getId(), "active");
+			Buy existBuy = buyService.getBuyUser(u.getId(), "active");
 			
 			if (existBuy != null) {
 				session.put("id_buy_actually", existBuy.getId());
@@ -80,7 +72,7 @@ public class LogIn extends ActionSupport {
 				newBuy.setUserId(u.getId());
 				newBuy.setTotal(0);
 				newBuy.setDate();
-				int idBuy = buyDao.createaBuy(newBuy);
+				int idBuy = buyService.createaBuy(newBuy);
 				session.put("id_buy_actually", idBuy);
 				newBuy.setId(idBuy);
 				session.put("buy", newBuy);

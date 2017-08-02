@@ -7,8 +7,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.ResultPath;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.antonio.dao.ProductDAO;
 import com.antonio.model.Product;
+import com.antonio.service.ProductService;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -23,16 +23,8 @@ import com.opensymphony.xwork2.ActionSupport;
 public class ListProductAction extends ActionSupport {
 
 	@Autowired
-	private ProductDAO productDAO;
+	private ProductService productService;
 	private List<Product> listProduct;
-
-	public ProductDAO getProductDAO() {
-		return productDAO;
-	}
-
-	public void setProductDAO(ProductDAO productDAO) {
-		this.productDAO = productDAO;
-	}
 
 	public List<Product> getListProduct() {
 		return listProduct;
@@ -43,7 +35,7 @@ public class ListProductAction extends ActionSupport {
 	}
 
 	public String execute() {
-		listProduct = productDAO.listProduct();
+		listProduct = productService.listProduct();
 		return SUCCESS;
 	}
 

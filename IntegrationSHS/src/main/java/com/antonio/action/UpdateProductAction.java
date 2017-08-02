@@ -7,8 +7,8 @@ import org.apache.struts2.convention.annotation.ResultPath;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.antonio.dao.ProductDAO;
 import com.antonio.model.Product;
+import com.antonio.service.ProductService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Action("/edit_product")
@@ -20,8 +20,8 @@ import com.opensymphony.xwork2.ActionSupport;
 public class UpdateProductAction extends ActionSupport {
 
 	@Autowired
-	ProductDAO productDAO;
-	Product product;
+	private ProductService productService;
+	private Product product;
 
 	public Product getProduct() {
 		return product;
@@ -37,12 +37,12 @@ public class UpdateProductAction extends ActionSupport {
 		if (product != null) {
 			System.out.println("--- PRODUCTO ACTUALIZADO");
 			System.out.println("NUEVA DESCRIPCION: " + product.getDescription());
-			productDAO.insertProduct(product);
+			productService.insertProduct(product);
 			return SUCCESS;
 		}
 
 		int id = Integer.parseInt(ServletActionContext.getRequest().getParameter("id"));
-		product = productDAO.getProduct(id);
+		product = productService.getProduct(id);
 		return NONE;
 	}
 

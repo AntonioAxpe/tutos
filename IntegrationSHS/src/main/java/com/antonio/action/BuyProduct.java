@@ -10,12 +10,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.ResultPath;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.antonio.dao.BuyDAO;
-import com.antonio.dao.DetailBuyDAO;
-import com.antonio.dao.ProductDAO;
 import com.antonio.model.Buy;
 import com.antonio.model.DetailBuy;
 import com.antonio.model.Product;
+import com.antonio.service.BuyService;
+import com.antonio.service.ProductService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -29,9 +28,9 @@ import com.opensymphony.xwork2.ActionSupport;
 public class BuyProduct extends ActionSupport {
 
 	@Autowired
-	private BuyDAO buyDAO;
+	private BuyService buyService;
 	@Autowired
-	private ProductDAO productDAO;
+	private ProductService productService;
 	private Product product;
 	private Buy buy;
 	private Set<DetailBuy> miCesta;
@@ -43,7 +42,7 @@ public class BuyProduct extends ActionSupport {
 		
 		// Producto a añadir a la cesta
 		int id = Integer.parseInt(ServletActionContext.getRequest().getParameter("id"));
-		product = productDAO.getProduct(id);
+		product = productService.getProduct(id);
 		
 		// Se obtiene la compra activa del usuario
 		buy = (Buy) session.get("buy");
@@ -66,7 +65,7 @@ public class BuyProduct extends ActionSupport {
 		generateTotalBuy(buy);
 		
 		// Se encarga de crear o modificar la compra en la tabla BUY.
-		buyDAO.createaBuy(buy);
+		buyService.createaBuy(buy);
 		session.put("buy", buy);
 		
 		return SUCCESS;
