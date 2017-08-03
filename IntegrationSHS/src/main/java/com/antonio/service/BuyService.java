@@ -14,6 +14,8 @@ public interface BuyService {
 
 	List<Buy> listBuy();
 	
+	List<Buy> listBuy(int userId);
+	
 	Buy getBuyUser(int userId, String status);
 	
 	void addProductToMyList(Buy buy);

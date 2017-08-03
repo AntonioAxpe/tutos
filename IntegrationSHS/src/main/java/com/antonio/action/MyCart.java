@@ -139,6 +139,10 @@ public class MyCart extends ActionSupport {
     	return myCart;
     }
 
+    /**
+     * Lista todos los productos de una compra y obtiene el total.
+     * @param buy Objeto que contiene una lista con todos los productos.
+     */
     public void generateTotalBuy(Buy buy) {
     	Set<DetailBuy> myDetailBuy = buy.getDetailBuy();
 		Iterator<DetailBuy> itr = myDetailBuy.iterator();

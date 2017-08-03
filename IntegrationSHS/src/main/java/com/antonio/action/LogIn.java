@@ -15,6 +15,11 @@ import com.antonio.service.UserService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * Clase encargada de realizar el Login del usuario en la aplicación.
+ * Además de comprobar si está logueado se le crea una compra activa en caso de no tener una.
+ * @author Antonio Soto
+ */
 @Action("/Inicio")
 @ResultPath("/WEB-INF/views")
 @Results({
@@ -43,7 +48,6 @@ public class LogIn extends ActionSupport {
 		Map session = ActionContext.getContext().getSession();
 
 		// Comprobación del usuario y contraseña de LogIn
-		
 		User u = null;
 		if (user != null) {			
 			u = userService.userLogIn(user.getUsername(), user.getPassword());
@@ -59,25 +63,7 @@ public class LogIn extends ActionSupport {
 			session.put("name", u.getName());
 			session.put("user_id", u.getId());
 			
-			// Comprueba si el usuario tiene una compra activa
-			Buy existBuy = buyService.getBuyUser(u.getId(), "active");
-			
-			if (existBuy != null) {
-				session.put("id_buy_actually", existBuy.getId());
-				session.put("buy", existBuy);
-				//System.out.println("YA EXISTE UNA COMPRA: " + existBuy.getId());
-			}else {
-				Buy newBuy = new Buy();
-				newBuy.setStatus("active");
-				newBuy.setUserId(u.getId());
-				newBuy.setTotal(0);
-				newBuy.setDate();
-				int idBuy = buyService.createaBuy(newBuy);
-				session.put("id_buy_actually", idBuy);
-				newBuy.setId(idBuy);
-				session.put("buy", newBuy);
-				//System.out.println("ID DE LA COMPRA CREADA: " + idBuy);
-			}
+			checkBuyUser(u, session);
 			
 			return SUCCESS;
 		}
@@ -87,4 +73,37 @@ public class LogIn extends ActionSupport {
 		return ERROR;
 	}
 
+	/**
+	 * Comprueba si el usuario tiene una compra Activa.
+	 * En caso de no tenerla, se le crea una y se le asocia al usuario además de guardala en sesión.
+	 * @param user Objeto usuario activo.
+	 * @param session Sesión donde se almacena su compra activa.
+	 */
+	public void checkBuyUser(User user, Map session) {
+		// Comprueba si el usuario tiene una compra activa.
+		Buy existBuy = buyService.getBuyUser(user.getId(), "active");
+		
+		// Si tiene una compra Activa este se guarda en sesión.
+		if (existBuy != null) 
+		{
+			session.put("id_buy_actually", existBuy.getId());
+			session.put("buy", existBuy);
+		}
+		// En caso de no tener una, se crea una nueva y se le asocia al usuario.
+		else 
+		{
+			Buy newBuy = new Buy();
+			newBuy.setStatus("active");
+			newBuy.setUserId(user.getId());
+			newBuy.setTotal(0);
+			newBuy.setDate();
+			
+			int idNewBuy = buyService.createaBuy(newBuy);
+			newBuy.setId(idNewBuy);
+			
+			session.put("id_buy_actually", idNewBuy);
+			session.put("buy", newBuy);
+		}
+	}
+	
 }

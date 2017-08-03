@@ -39,6 +39,12 @@ public class BuyServiceImpl implements BuyService {
 	public List<Buy> listBuy() {
 		return buyDAO.listBuy();
 	}
+	
+	@Override
+	@Transactional
+	public List<Buy> listBuy(int userId){
+		return buyDAO.listBuy(userId);
+	}
 
 	@Override
 	@Transactional

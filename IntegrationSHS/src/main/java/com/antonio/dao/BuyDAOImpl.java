@@ -36,7 +36,16 @@ public class BuyDAOImpl implements BuyDAO {
 	}
 
 	public List<Buy> listBuy() {
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("FROM Buy").list();
+	}
+	public List<Buy> listBuy(int userId) {
+		String hql = "FROM Buy WHERE userId=" + userId;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		
+		@SuppressWarnings("unchecked")
+		List<Buy> myBuys = query.list();
+		
+		return myBuys;
 	}
 
 	public Buy getBuyUser(int userId, String status) {

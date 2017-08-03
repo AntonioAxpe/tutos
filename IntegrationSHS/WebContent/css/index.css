@@ -103,3 +103,14 @@ body{
 .product__new form table tr td label{ color: black;}
 .product__new form table tr td input, 
 .product__new form table tr td textarea { width: 100%;}
+
+
+/** MY BUYS **/
+.block_buys{
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.modal .modal-dialog{ width: 80%;}
+.modal .modal-dialog .modal-content{ padding: 30px;}
+.modal .modal-dialog .modal-content .table{ font-size: 20px;}
