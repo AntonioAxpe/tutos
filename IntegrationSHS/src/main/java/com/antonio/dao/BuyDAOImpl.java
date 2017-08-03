@@ -15,7 +15,7 @@ import com.antonio.model.Buy;
 public class BuyDAOImpl implements BuyDAO {
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	public BuyDAOImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;

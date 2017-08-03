@@ -80,7 +80,7 @@ public class ApplicationContextConfig {
 	}
 	
 	@Autowired
-	@Bean(name = "DetailBuyDAO")
+	@Bean(name = "detailBuyDAO")
 	public DetailBuyDAO getDetailBuyDAO(SessionFactory sessionFactory) {
 		return new DetailBuyDAOImpl(sessionFactory);
 	}

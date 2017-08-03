@@ -13,10 +13,10 @@ import org.apache.struts2.convention.annotation.ResultPath;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.antonio.dao.DetailBuyDAO;
 import com.antonio.model.Buy;
 import com.antonio.model.DetailBuy;
 import com.antonio.service.BuyService;
+import com.antonio.service.DetailBuyService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -25,12 +25,12 @@ import com.opensymphony.xwork2.ActionSupport;
 @Results({ @Result(name = "success", location = "MyCart.jsp") })
 public class MyCart extends ActionSupport {
 
-	private List<DetailBuy> myCartList = null;
-	private float totalMyCart = 0;
 	@Autowired
 	private BuyService buyService;
 	@Autowired
-	private DetailBuyDAO detailBuyDAO;
+	private DetailBuyService detailBuyService;
+	private List<DetailBuy> myCartList = null;
+	private float totalMyCart = 0;
 	
 	public List<DetailBuy> getMyCartList() {
 		return myCartList;
@@ -130,7 +130,7 @@ public class MyCart extends ActionSupport {
     	while (itr.hasNext()) {
     		DetailBuy db = itr.next();
 			if (db.getProduct().getId() == idProduct) {
-				detailBuyDAO.deleteDetailBuyFromMyCart(db);
+				detailBuyService.deleteDetailBuyFromMyCart(db);
 				itr.remove();
 			}
 		}

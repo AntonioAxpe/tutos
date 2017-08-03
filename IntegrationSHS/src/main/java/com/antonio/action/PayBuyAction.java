@@ -7,8 +7,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.ResultPath;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.antonio.dao.BuyDAO;
 import com.antonio.model.Buy;
+import com.antonio.service.BuyService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class PayBuyAction extends ActionSupport{
 
 	@Autowired
-	private BuyDAO buyDAO;
+	private BuyService buyService;
 	private Boolean buyPayed = false;
 	
 	public Boolean getBuyPayed() {
@@ -34,7 +34,7 @@ public class PayBuyAction extends ActionSupport{
 		myBuy.setStatus("payed");
 		
 		
-		buyDAO.createaBuy(myBuy);
+		buyService.createaBuy(myBuy);
 		buyPayed = true;
 		
 		session.remove("buy");
