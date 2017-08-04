@@ -1,5 +1,6 @@
 package com.antonio.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -28,16 +29,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	public User getUser(int idUser) {
-		/*
-		 * String consult = "FROM User WHERE id = " + idUser; Query query =
-		 * sessionFactory.getCurrentSession().createQuery(consult);
-		 * 
-		 * @SuppressWarnings("unchecked") List<User> listUsers = (List<User>)
-		 * query.list();
-		 * 
-		 * if (listUsers != null && !listUsers.isEmpty()) { return listUsers.get(0); }
-		 */
-		return null;
+		String sql = "FROM User WHERE id = " + idUser;
+		
+		@SuppressWarnings("unchecked")
+		List<User> listUser = (List<User>) sessionFactory.getCurrentSession().createQuery(sql).list();			
+		
+		return listUser.get(0);
 	}
 
 	public void insertUser(User user) {

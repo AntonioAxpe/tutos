@@ -30,10 +30,6 @@ public class ListProductAction extends ActionSupport {
 		return listProduct;
 	}
 
-	public void setListProduct(List<Product> listProduct) {
-		this.listProduct = listProduct;
-	}
-
 	public String execute() {
 		listProduct = productService.listProduct();
 		return SUCCESS;

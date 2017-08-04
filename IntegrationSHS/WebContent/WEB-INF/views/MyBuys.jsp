@@ -21,15 +21,19 @@
             		$('tbody.my_products').html('');
             		
             		$.getJSON('MyBuys', {oneBuySelect : id}, function(respond){
-            			respond.detailsBuy;
             			
-            			for (var i = 0; i < respond.detailsBuy.length; i++) {
-                            contenido += '<tr>';							
-	            			contenido +=     '<td>'+respond.detailsBuy[i].product.name+'</td>';
-	            			contenido +=     '<td>'+respond.detailsBuy[i].quantity+'</td>';
-	            			contenido +=     '<td>'+respond.detailsBuy[i].total+' €</td>';
-	            			contenido += '</tr>';
+            			if (respond.detailsBuy.length == 0) {
+							contenido += '<tr><td colspan="3"><h3>Su lista se encuentra vacia</h3></td></tr>';
+						}else{							
+	            			for (var i = 0; i < respond.detailsBuy.length; i++) {
+	                            contenido += '<tr>';							
+		            			contenido +=     '<td>'+respond.detailsBuy[i].product.name+'</td>';
+		            			contenido +=     '<td>'+respond.detailsBuy[i].quantity+'</td>';
+		            			contenido +=     '<td>'+respond.detailsBuy[i].total+' €</td>';
+		            			contenido += '</tr>';
+							}
 						}
+            			
             			
             			$('tbody.my_products').html(contenido);
             		})
@@ -40,6 +44,9 @@
 	<body>
 	    <div>
 	        <h2>Listado de mis compras realizadas</h2>
+	    </div>
+	    <div>
+	        <a href="Inicio"><button class="btn btn-danger">Volver al menú</button></a>
 	    </div>
 	    <s:if test="%{!myBuys.isEmpty()}">
 	    <div class="block_buys">
@@ -83,7 +90,7 @@
 			    <div class="modal-content">
 			      <div class="modal-header">
 				      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				      <h4 class="modal-title">Modal title</h4>
+				      <h4 class="modal-title">Productos de mi compra</h4>
 			      </div>
 			      <div class="modal-body">
 				      <table class="table table-bordered">
@@ -99,7 +106,7 @@
 				      </table>
 			      </div>
 			      <div class="modal-footer">
-			         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 			      </div>
 			    </div>
 			  </div>

@@ -13,22 +13,49 @@
 	    <!-- MI LISTA DE PRODUCTOS -->
 	    <s:if test="%{!getMyProducts().isEmpty()}">
             <h2>My Products List</h2>
-            <table width="80%" border="1" style="border-collapse: collapse;">
-            	<tr>
-            		<th>Nº</th>
-            		<th>Product Name</th>
-            		<th>Description</th>
-            		<th>Price</th>
-            	</tr>
-            	<s:iterator value="myProducts" status="status">
-            	<tr>
-            		<td><s:property value="#status.count"/></td>
-            		<td><s:property value="name" /></td>
-            		<td><s:property value="description" /></td>
-                    <td><s:property value="price" /></td>
-            	</tr>
-            	</s:iterator>
-            </table>
+            
+            <s:if test="%{mySold}">
+                <a href="MyProducts"><button class="btn btn-danger">Back to main</button></a><br/>
+		        <s:iterator value="%{myProducts}" var="sold">
+                    <s:if test="%{!#sold.getDetailBuy().isEmpty()}">
+	                   	<s:property value="#sold.getName()"/>
+	                    <table class="table table-hover">
+		                    <tr>
+		                    	<th>Id compra</th>
+		                    	<th>Usuario</th>
+		                    	<th>Cantidad comprada</th>
+		                    </tr>
+		                    <s:iterator value="%{#sold.getDetailBuy()}" var="itr">
+		    		                <tr>
+		    		                    <td><s:property value="#itr.getBuy().getId()"/></td>
+	                                    <td><s:property value="saludo(#itr.getBuy().getUserId())"/></td>
+	                                    <td><s:property value="#itr.getQuantity()"/></td>
+		    		                </tr>
+		                    </s:iterator>
+		                </table>
+                    </s:if>
+                </s:iterator>
+            </s:if>
+            <s:else>
+	            <a href="Inicio"><button class="btn btn-danger">Back to main</button></a>
+	            <a href="MyProducts?sold=true"><button class="btn btn-warning">My products sold</button></a>
+	            <table width="80%" class="table table-hover">
+	            	<tr>
+	            		<th>Nº</th>
+	            		<th>Product Name</th>
+	            		<th>Description</th>
+	            		<th>Price</th>
+	            	</tr>
+	            	<s:iterator value="myProducts" status="status">
+	            	<tr>
+	            		<td><s:property value="#status.count"/></td>
+	            		<td><s:property value="name" /></td>
+	            		<td><s:property value="description" /></td>
+	                    <td><s:property value="price" /></td>
+	            	</tr>
+	            	</s:iterator>
+	            </table>
+            </s:else>
 	    </s:if>
 	    
 	    <!-- TODOS LOS PRODUCTOS -->

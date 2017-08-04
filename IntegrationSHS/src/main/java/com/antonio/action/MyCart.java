@@ -1,5 +1,6 @@
 package com.antonio.action;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -30,13 +31,13 @@ public class MyCart extends ActionSupport {
 	@Autowired
 	private DetailBuyService detailBuyService;
 	private List<DetailBuy> myCartList = null;
-	private float totalMyCart = 0;
+	private String totalMyCart;
 	
 	public List<DetailBuy> getMyCartList() {
 		return myCartList;
 	}
 
-	public float getTotalMyCart() {
+	public String getTotalMyCart() {
 		return totalMyCart;
 	}
 
@@ -107,12 +108,14 @@ public class MyCart extends ActionSupport {
 	 *            List a recorrer.
 	 * @return Devuelve la cantidad total.
 	 */
-	public float getTotalMyList(List<DetailBuy> list) {
+	public String getTotalMyList(List<DetailBuy> list) {
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(2);
 		float total = 0;
 		for (int i = 0; i < list.size(); i++) {
 			total += list.get(i).getTotal();
 		}
-		return total;
+		return df.format(total);
 	}
 
 	/**

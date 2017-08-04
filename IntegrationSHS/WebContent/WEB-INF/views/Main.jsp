@@ -18,7 +18,8 @@
 	    <div class="main__option">
 		    <p>Choose a option</p>
 		    <ul>
-		    	<li><a href="MyProducts?userId=<%= session.getAttribute("user_id") %>">My products</a></li>
+<%-- 		    	<li><a href="MyProducts?userId=<%= session.getAttribute("user_id") %>">My products</a></li> --%>
+		    	<li><a href="MyProducts">My products</a></li>
 		    	<li><a href="listProduct">All products</a></li>
 		    	<li><a href="MyBuys">My list buy</a></li>
 		    </ul>
