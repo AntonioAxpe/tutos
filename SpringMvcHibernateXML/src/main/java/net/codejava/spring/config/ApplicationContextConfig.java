@@ -22,9 +22,6 @@ import net.codejava.spring.dao.UserDAOImpl;
 import net.codejava.spring.model.Sport;
 import net.codejava.spring.model.User;
 
-@Configuration // Indica que es un archivo de configuración de Spring
-@ComponentScan("net.codejava.spring") // Indica el paquete para las anotaciones
-@EnableTransactionManagement // Habilita las transacciones hechas por anotaciones
 
 /**
  * Clase de configuración de ApplicationContextConfig, sustituye al xml. en
@@ -32,6 +29,9 @@ import net.codejava.spring.model.User;
  * 
  * @author avicentesh
  */
+@Configuration // Indica que es un archivo de configuración de Spring
+@ComponentScan("net.codejava.spring") // Indica el paquete para las anotaciones
+@EnableTransactionManagement // Habilita las transacciones hechas por anotaciones
 public class ApplicationContextConfig {
 
 	/**
@@ -53,8 +53,8 @@ public class ApplicationContextConfig {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/usuarios");
-		dataSource.setUsername("XXXXXXX");
-		dataSource.setPassword("XXXXXXX");
+		dataSource.setUsername("root");
+		dataSource.setPassword("");
 		return dataSource;
 	}
 
