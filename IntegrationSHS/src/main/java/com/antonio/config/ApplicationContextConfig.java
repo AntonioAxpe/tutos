@@ -37,7 +37,7 @@ public class ApplicationContextConfig {
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/productos");
 		dataSource.setUsername("Antonio");
-		dataSource.setPassword("1234.");
+		dataSource.setPassword("your_password");
 
 		return dataSource;
 	}
