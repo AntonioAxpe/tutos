@@ -18,8 +18,8 @@
                 <a href="MyProducts"><button class="btn btn-danger">Back to main</button></a><br/>
 		        <s:iterator value="%{myProducts}" var="sold">
                     <s:if test="%{!#sold.getDetailBuy().isEmpty()}">
-	                   	<s:property value="#sold.getName()"/>
-	                    <table class="table table-hover">
+	                   	<b><s:property value="#sold.getName()"/></b>
+	                    <table class="table table-striped">
 		                    <tr>
 		                    	<th>Id compra</th>
 		                    	<th>Usuario</th>
